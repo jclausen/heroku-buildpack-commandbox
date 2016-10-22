@@ -2,3 +2,8 @@
 # bin/release <build-dir>
 
 BUILD_DIR=$1
+cat << EOF
+addons: []
+default_process_types:
+  web: $BUILD_DIR/startup.sh
+EOF

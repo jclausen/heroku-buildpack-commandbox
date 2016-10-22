@@ -48,8 +48,5 @@ export PORT=${PORT:-$(( $RANDOM+1024 ))}
 
 box server set web.http.port=$PORT
 box server set openbrowser=false
-echo $(box server start) > "$LOG_FILE"
-
-# if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-#   error "Failed to build app with Commandbox."
-# fi
+touch "$BUILD_DIR/startup.sh"
+echo "box server start" > "$BUILD_DIR/startup.sh"
