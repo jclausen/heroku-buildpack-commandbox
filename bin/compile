@@ -45,7 +45,5 @@ box server set openbrowser=false
 echo $(box server start) > "$LOG_FILE"
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
-  error "Failed to build app with Maven
-We're sorry this build is failing! If you can't find the issue in application code,
-please submit a ticket so we can help: https://help.heroku.com/"
+  error "Failed to build app with Commandbox."
 fi
