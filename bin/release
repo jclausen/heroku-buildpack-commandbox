@@ -4,5 +4,5 @@
 cat << EOF
 addons: []
 default_process_types:
-  web: "/app/bin/box server start && tail -f $(awk '/./{line=$0} END{print line}' $(box log ))"
+  web: "/app/bin/box server start && touch /tmp/server.log && tail -f /tmp/server.log"
 EOF
