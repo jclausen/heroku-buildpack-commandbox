@@ -33,10 +33,10 @@ status "Installing CommandBox"
 #su apt-get --assume-yes install commandbox
 
 curl --location 'https://www.ortussolutions.com/parent/download/commandbox/type/bin' -o /tmp/box.zip
-mkdir /tmp/bin
-export PATH=$PATH:/tmp/bin
-unzip /tmp/box.zip -d /tmp/bin
-chmod +x /tmp/bin/box
+mkdir $BUILD_DIR/bin
+export PATH=$PATH:$BUILD_DIR/bin
+unzip /tmp/box.zip -d $BUILD_DIR/bin
+chmod +x $BUILD_DIR/bin/box
 
 COMMANDBOX_VERSION="$(box version)"
 
@@ -49,3 +49,4 @@ export PORT=${PORT:-$(( $RANDOM+1024 ))}
 
 box server set web.http.port=$PORT
 box server set openbrowser=false
+

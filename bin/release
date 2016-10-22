@@ -9,5 +9,5 @@ BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 cat << EOF
 addons: []
 default_process_types:
-  web: "cd $HEROKU_APP_DIR && box server start"
+  web: "$BUILD_DIR/bin/box server start"
 EOF
