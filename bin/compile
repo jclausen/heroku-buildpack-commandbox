@@ -26,10 +26,14 @@ mkdir -p $CACHE_DIR
 
 status "Installing CommandBox"
 
-su apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
-echo "deb http://integration.stg.ortussolutions.com/artifacts/debs/noarch /" | su tee -a /etc/apt/sources.list.d/commandbox.list
-su apt-get update 
-su apt-get --assume-yes install commandbox
+#su apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
+#echo "deb http://integration.stg.ortussolutions.com/artifacts/debs/noarch /" | su tee -a /etc/apt/sources.list.d/commandbox.list
+#su apt-get update 
+#su apt-get --assume-yes install commandbox
+
+curl --location 'https://www.ortussolutions.com/parent/download/commandbox/type/bin' -o /tmp/box.zip
+unzip /tmp/box.zip -d /usr/local/bin
+chmod +x /usr/local/bin/box
 
 COMMANDBOX_VERSION="$(box version)"
 
