@@ -49,10 +49,3 @@ export PORT=${PORT:-$(( $RANDOM+1024 ))}
 
 box server set web.http.port=$PORT
 box server set openbrowser=false
-
-mkdir $BP_DIR/vendor
-mkdir $BP_DIR/vendor/bin
-VBIN=$BP_DIR/vendor/bin
-
-cp $BIN_DIR/start.sh $VBIN/
-chmod +x $VBIN/start.sh
