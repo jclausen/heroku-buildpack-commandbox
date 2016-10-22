@@ -45,7 +45,7 @@ status "$COMMANDBOX_VERSION successfully installed"
 # change to build directory to handle ComandBox Startup
 cd $BUILD_DIR
 
-export PORT=${PORT:5000}
+export PORT=5000
 
 box server set web.http.port=$PORT
 box server set openbrowser=false
