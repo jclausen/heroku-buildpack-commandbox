@@ -4,5 +4,5 @@
 cat << EOF
 addons: []
 default_process_types:
-  web: "$HEROKU_APP_PATH/bin/box server start"
+  web: "/app/bin/box server start"
 EOF
