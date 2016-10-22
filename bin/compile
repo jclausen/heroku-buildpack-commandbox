@@ -7,9 +7,10 @@ BIN_DIR=$(cd $(dirname $0)/; pwd)
 . $BIN_DIR/util/common.sh
 
 # parse args
-BUILD_DIR=$1
-CACHE_DIR=$2
-ENV_DIR=$3
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 LOG_FILE='/tmp/commandbox-build-log.txt'
 
 export_env_dir $ENV_DIR
@@ -49,4 +50,7 @@ export PORT=${PORT:-$(( $RANDOM+1024 ))}
 box server set web.http.port=$PORT
 box server set openbrowser=false
 touch "$BUILD_DIR/startup.sh"
+echo "#!/usr/bin/env bash" > "$BUILD_DIR/startup.sh"
+echo "" > "$BUILD_DIR/startup.sh"
 echo "box server start" > "$BUILD_DIR/startup.sh"
+chmod +x $BUILD_DIR/startup.sh
