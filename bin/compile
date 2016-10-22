@@ -37,6 +37,9 @@ mkdir $BUILD_DIR/bin
 export PATH=$PATH:$BUILD_DIR/bin
 unzip /tmp/box.zip -d $BUILD_DIR/bin
 chmod +x $BUILD_DIR/bin/box
+#Set our commandbox home directory
+touch $BUILD_DIR/bin/commandbox.properties
+echo "./.Commandbox" > $BUILD_DIR/bin/commandbox.properties
 
 COMMANDBOX_VERSION="$(box version)"
 
