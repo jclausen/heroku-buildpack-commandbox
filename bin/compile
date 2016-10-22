@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# fail fast
+set -e
+BIN_DIR=$(cd $(dirname $0)/; pwd)
+. $BIN_DIR/util/common.sh
+
+# parse args
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+LOG_FILE='/tmp/commandbox-build-log.txt'
+
+export_env_dir $ENV_DIR
+
+JVM_COMMON_BUILDPACK=${JVM_COMMON_BUILDPACK:-https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/jvm-common.tgz}
+mkdir -p /tmp/jvm-common
+curl --retry 3 --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-common --strip-components=1
+. /tmp/jvm-common/bin/util
+. /tmp/jvm-common/bin/java
+. /tmp/jvm-common/opt/jdbc.sh
+install_java_with_overlay ${BUILD_DIR}
+
+mkdir -p $CACHE_DIR
+
+status "Installing CommandBox"
+
+apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
+echo "deb http://integration.stg.ortussolutions.com/artifacts/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
+apt-get update 
+sudo apt-get --assume-yes install commandbox
+
+COMMANDBOX_VERSION="$(box version)"
+
+status "$COMMANDBOX_VERSION successfully installed"
+
+# change to build directory to handle ComandBox Startup
+cd $BUILD_DIR
+
+export PORT=${PORT:-$(( $RANDOM+1024 ))}
+
+box server set web.http.port=$PORT
+box server set openbrowser=false
+echo $(box server start) > "$LOG_FILE"
+
+if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+  error "Failed to build app with Maven
+We're sorry this build is failing! If you can't find the issue in application code,
+please submit a ticket so we can help: https://help.heroku.com/"
+fi
