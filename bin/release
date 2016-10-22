@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 # bin/release <build-dir>
 
-BUILD_DIR=${1:-}
-CACHE_DIR=${2:-}
-ENV_DIR=${3:-}
-BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
-
 cat << EOF
 addons: []
 default_process_types:
-  web: "$BUILD_DIR/bin/box server start"
+  web: "$HEROKU_APP_PATH/bin/box server start"
 EOF
