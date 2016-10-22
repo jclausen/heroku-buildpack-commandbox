@@ -49,8 +49,10 @@ export PORT=${PORT:-$(( $RANDOM+1024 ))}
 
 box server set web.http.port=$PORT
 box server set openbrowser=false
-touch "$BUILD_DIR/startup.sh"
-echo "#!/usr/bin/env bash" > "$BUILD_DIR/startup.sh"
-echo "" > "$BUILD_DIR/startup.sh"
-echo "box server start" > "$BUILD_DIR/startup.sh"
-chmod +x $BUILD_DIR/startup.sh
+
+mkdir $BP_DIR/vendor
+mkdir $BP_DIR/vendor/bin
+VBIN=$BP_DIR/vendor/bin
+
+cp $BIN_DIR/start.sh $VBIN/
+chmod +x $VBIN/start.sh

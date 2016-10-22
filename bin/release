@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # bin/release <build-dir>
 
-BUILD_DIR=$1
+ENV_DIR=${3:-}
 cat << EOF
 addons: []
 default_process_types:
-  web: $BUILD_DIR/startup.sh
+  web: vendor/bin/start.sh
 EOF
