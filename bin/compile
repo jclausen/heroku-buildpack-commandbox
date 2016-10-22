@@ -48,5 +48,6 @@ cd $BUILD_DIR
 export PORT=5000
 
 box server set web.http.port=$PORT
+box server set web.host=$PORT
 box server set openbrowser=false
 
